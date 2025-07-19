@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>FAQ Generator — Введите вопросы и ответы</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .faq-pair {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 6px #ddd;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+    #copyMessage {
+      color: green;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    #addPairBtn {
+      margin-bottom: 1rem;
+      background: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <h1>Генератор FAQ</h1>
+  <div id="faqContainer">
+    <!-- Пары вопрос-ответ вставляются сюда -->
+  </div>
+
+  <button id="addPairBtn">+ Добавить вопрос и ответ</button>
+  <button id="copyBtn" disabled>Скопировать HTML в буфер</button>
+  <div id="copyMessage">Скопировано в буфер!</div>
+
+<script>
+  const faqContainer = document.getElementById('faqContainer');
+  const addPairBtn = document.getElementById('addPairBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyMessage = document.getElementById('copyMessage');
+
+  function createFaqPair(index) {
+    const div = document.createElement('div');
+    div.className = 'faq-pair';
+
+    const labelQ = document.createElement('label');
+    labelQ.textContent = `Вопрос #${index + 1}`;
+    const inputQ = document.createElement('input');
+    inputQ.type = 'text';
+    inputQ.className = 'faq-question';
+    inputQ.required = true;
+
+    const labelA = document.createElement('label');
+    labelA.textContent = `Ответ #${index + 1}`;
+    const textareaA = document.createElement('textarea');
+    textareaA.className = 'faq-answer';
+    textareaA.rows = 3;
+    textareaA.required = true;
+
+    div.appendChild(labelQ);
+    div.appendChild(inputQ);
+    div.appendChild(labelA);
+    div.appendChild(textareaA);
+
+    return div;
+  }
+
+  function updateCopyButtonState() {
+    const questions = document.querySelectorAll('.faq-question');
+    const answers = document.querySelectorAll('.faq-answer');
+
+    // Проверяем, что есть хотя бы один непустой вопрос и ответ
+    let enable = false;
+    for(let i = 0; i < questions.length; i++) {
+      if (questions[i].value.trim() !== '' && answers[i].value.trim() !== '') {
+        enable = true;
+        break;
+      }
+    }
+    copyBtn.disabled = !enable;
+  }
+
+  function generateHtml() {
+    const questions = document.querySelectorAll('.faq-question');
+    const answers = document.querySelectorAll('.faq-answer');
+
+    let html = `<div class="custom-faq">\n`;
+    for(let i = 0; i < questions.length; i++) {
+      const q = questions[i].value.trim();
+      const a = answers[i].value.trim();
+      if(q && a) {
+        html += `
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="faq${i}" id="faq${i}-button">
+      <strong>${escapeHtml(q)}</strong>
+    </button>
+    <div id="faq${i}" class="faq-answer" hidden>
+      <p>${escapeHtml(a)}</p>
+    </div>
+  </div>`;
+      }
+    }
+    html += `\n</div>`;
+    return html;
+  }
+
+  // Экранируем спецсимволы для HTML
+  function escapeHtml(text) {
+    return text.replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/"/g, "&quot;")
+               .replace(/'/g, "&#039;");
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      copyMessage.style.display = 'block';
+      setTimeout(() => copyMessage.style.display = 'none', 2000);
+    });
+  }
+
+  addPairBtn.addEventListener('click', () => {
+    const newPair = createFaqPair(faqContainer.children.length);
+    faqContainer.appendChild(newPair);
+    updateCopyButtonState();
+  });
+
+  faqContainer.addEventListener('input', () => {
+    updateCopyButtonState();
+  });
+
+  copyBtn.addEventListener('click', () => {
+    const html = generateHtml();
+    copyToClipboard(html);
+  });
+
+  // Инициализация - добавляем пару по умолчанию
+  addPairBtn.click();
+
+</script>
+</body>
+</html>

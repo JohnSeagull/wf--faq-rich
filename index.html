@@ -1,267 +1,130 @@
-< !DOCTYPE html >
-    <html lang="ru">
-        <head>
-            <meta charset="UTF-8" />
-            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-                <title>FAQ Generator — Enter Questions & Answers</title>
-                <style>
-                    :root {
-                        --font: 'Inter', sans-serif;
-                    --radius: 1rem;
-                    --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-                    --color-bg: #f5f6f8;
-                    --color-white: #ffffff;
-                    --color-text: #1a1a1a;
-                    --color-primary: #0d6efd;
-                    --color-danger: #dc3545;
-                    --color-success: #28a745;
-                    --color-border: #dce1e7;
-}
-
-                    body {
-                        font - family: var(--font);
-                    background-color: var(--color-bg);
-                    color: var(--color-text);
-                    max-width: 880px;
-                    margin: 3rem auto;
-                    padding: 0 1rem;
-                    line-height: 1.6;
-}
-
-                    h1 {
-                        font - size: 2rem;
-                    font-weight: 600;
-                    text-align: center;
-                    margin-bottom: 2rem;
-}
-
-                    .faq-pair {
-                        display: flex;
-                    gap: 1.5rem;
-                    background: var(--color-white);
-                    padding: 1.5rem;
-                    margin-bottom: 1.5rem;
-                    border-radius: var(--radius);
-                    box-shadow: var(--shadow);
-                    border: 1px solid var(--color-border);
-}
-
-                    .faq-question-wrapper,
-                    .faq-answer-wrapper {
-                        flex: 1 1 0;
-                    display: flex;
-                    flex-direction: column;
-}
-
-                    label {
-                        font - size: 0.9rem;
-                    font-weight: 500;
-                    margin-bottom: 0.5rem;
-                    color: #555;
-}
-
-                    input[type="text"],
-                    textarea {
-                        width: 100%;
-                    font-family: var(--font);
-                    font-size: 1rem;
-                    padding: 0.75rem 1rem;
-                    border: 1px solid var(--color-border);
-                    border-radius: 0.75rem;
-                    background: #fff;
-                    transition: border-color 0.2s ease;
-}
-
-                    input[type="text"]:focus,
-                    textarea:focus {
-                        outline: none;
-                    border-color: var(--color-primary);
-}
-
-                    textarea {
-                        resize: vertical;
-                    min-height: 4rem;
-}
-
-                    button {
-                        font - family: var(--font);
-                    font-size: 1rem;
-                    padding: 0.75rem 1.5rem;
-                    border: none;
-                    border-radius: 0.75rem;
-                    cursor: pointer;
-                    transition: background 0.2s ease;
-                    color: white;
-}
-
-                    #addBtn {
-                        background: var(--color-success);
-                    margin-bottom: 2rem;
-}
-
-                    button:disabled {
-                        background: #ccc;
-                    cursor: not-allowed;
-}
-
-                    .delete-btn {
-                        background: var(--color-danger);
-                    font-size: 0.875rem;
-                    padding: 0.6rem 1rem;
-                    align-self: center;
-}
-
-                    #copyMessage {
-                        color: var(--color-success);
-                    font-weight: 500;
-                    margin-top: 1rem;
-                    display: none;
-}
-                </style>
-        </head>
-        <body>
-            <h1>FAQ Generator</h1>
-            <div id="faqContainer"></div>
-
-            <button id="addBtn">+ Add Q&A</button>
-            <button id="copyBtn" disabled>Copy HTML to Clipboard</button>
-            <div id="copyMessage">Copied!</div>
-
-            <script>
-                const container = document.getElementById('faqContainer');
-                const addBtn = document.getElementById('addBtn');
-                const copyBtn = document.getElementById('copyBtn');
-                const copyMsg = document.getElementById('copyMessage');
-
-                // Create a new FAQ pair block with horizontal layout
-                function addPair(index) {
-    const div = document.createElement('div');
-                div.className = 'faq-pair';
-
-                // Question block
-                const qWrapper = document.createElement('div');
-                qWrapper.className = 'faq-question-wrapper';
-                const qLabel = document.createElement('label');
-                qLabel.textContent = `Question #${index + 1}`;
-                const qInput = document.createElement('input');
-                qInput.type = 'text';
-                qInput.className = 'question';
-                qInput.required = true;
-                qWrapper.appendChild(qLabel);
-                qWrapper.appendChild(qInput);
-
-                // Answer block
-                const aWrapper = document.createElement('div');
-                aWrapper.className = 'faq-answer-wrapper';
-                const aLabel = document.createElement('label');
-                aLabel.textContent = `Answer #${index + 1}`;
-                const aInput = document.createElement('textarea');
-                aInput.className = 'answer';
-                aInput.required = true;
-                aWrapper.appendChild(aLabel);
-                aWrapper.appendChild(aInput);
-
-                // Delete button
-                const delBtn = document.createElement('button');
-                delBtn.className = 'delete-btn';
-                delBtn.type = 'button';
-                delBtn.textContent = 'Delete';
-    delBtn.addEventListener('click', () => {
-                    div.remove();
-                refreshLabels();
-                updateCopyBtn();
-    });
-
-                div.appendChild(qWrapper);
-                div.appendChild(aWrapper);
-                div.appendChild(delBtn);
-
-                return div;
-  }
-
-                // Refresh question/answer labels numbering
-                function refreshLabels() {
-    const pairs = container.querySelectorAll('.faq-pair');
-    pairs.forEach((pair, i) => {
-                    pair.querySelector('.faq-question-wrapper label').textContent = `Question #${i + 1}`;
-                pair.querySelector('.faq-answer-wrapper label').textContent = `Answer #${i + 1}`;
-    });
-  }
-
-                // Enable copy button if at least one Q&A filled
-                function updateCopyBtn() {
-    const questions = container.querySelectorAll('.question');
-                const answers = container.querySelectorAll('.answer');
-                let enabled = false;
-                for(let i = 0; i < questions.length; i++) {
-      if(questions[i].value.trim() && answers[i].value.trim()) {
-                    enabled = true;
-                break;
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FAQ Generator — Enter Questions & Answers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script defer src="main.js"></script>
+    <style>
+      :root {
+        --font: 'Inter', sans-serif;
+        --radius: 1rem;
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        --color-bg: #f5f6f8;
+        --color-white: #ffffff;
+        --color-text: #1a1a1a;
+        --color-primary: #0d6efd;
+        --color-danger: #dc3545;
+        --color-success: #28a745;
+        --color-border: #dce1e7;
       }
-    }
-                copyBtn.disabled = !enabled;
-  }
 
-                // Generate HTML with structured data microdata
-                function generateHtml() {
-    const pairs = container.querySelectorAll('.faq-pair');
-                let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n  <div class="custom-faq">\n`;
-
-    pairs.forEach((pair, i) => {
-      const qInput = pair.querySelector('.question');
-                    const aInput = pair.querySelector('.answer');
-                    if (!qInput || !aInput) return;
-
-                    const q = qInput.value.trim();
-                    const a = aInput.value.trim();
-                    if (q && a) {
-                        html += `    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
-                    html += `      <button class="faq-question" aria-expanded="false" aria-controls="faq${i}" id="faq${i}-button">\n`;
-                        html += `        <strong itemprop="name">${escapeHtml(q)}</strong>\n`;
-                        html += `      </button>\n`;
-                    html += `      <div id="faq${i}" class="faq-answer" hidden itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">\n`;
-                        html += `        <p itemprop="text">${escapeHtml(a)}</p>\n`;
-                        html += `      </div>\n`;
-                    html += `    </div>\n`;
+      body {
+        font-family: var(--font);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        max-width: 880px;
+        margin: 3rem auto;
+        padding: 0 1rem;
+        line-height: 1.6;
       }
-    });
 
-                    html += `  </div>\n</div>`;
-            return html;
-  }
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
 
-            // Escape HTML special chars
-            function escapeHtml(text) {
-    return text.replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-               .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-  }
+      .faq-pair {
+        display: flex;
+        gap: 1.5rem;
+        background: var(--color-white);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--color-border);
+      }
 
-        // Copy text to clipboard
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                copyMsg.style.display = 'block';
-                setTimeout(() => copyMsg.style.display = 'none', 2000);
-            });
-  }
+      .faq-question-wrapper,
+      .faq-answer-wrapper {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+      }
 
-  // Event Listeners
-  addBtn.addEventListener('click', () => {
-            container.appendChild(addPair(container.children.length));
-        updateCopyBtn();
-  });
+      label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
 
-        container.addEventListener('input', updateCopyBtn);
+      input[type="text"],
+      textarea {
+        width: 100%;
+        font-family: var(--font);
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.75rem;
+        background: #fff;
+        transition: border-color 0.2s ease;
+      }
 
-  copyBtn.addEventListener('click', () => {
-    const html = generateHtml();
-        copyToClipboard(html);
-  });
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--color-primary);
+      }
 
-        // Init with one pair
-        addBtn.click();
-    </script>
-</body >
-</html >
+      textarea {
+        resize: vertical;
+        min-height: 4rem;
+      }
+
+      button {
+        font-family: var(--font);
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        color: white;
+      }
+
+      #addBtn {
+        background: var(--color-success);
+        margin-bottom: 2rem;
+      }
+
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .delete-btn {
+        background: var(--color-danger);
+        font-size: 0.875rem;
+        padding: 0.6rem 1rem;
+        align-self: center;
+      }
+
+      #copyMessage {
+        color: var(--color-success);
+        font-weight: 500;
+        margin-top: 1rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>FAQ Generator</h1>
+    <div id="faqContainer"></div>
+    <button id="addBtn">+ Add Q&A</button>
+    <button id="copyBtn" disabled>Copy HTML to Clipboard</button>
+    <div id="copyMessage">Copied!</div>
+  </body>
+</html>

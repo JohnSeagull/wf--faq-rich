@@ -191,18 +191,6 @@ body, html {
   user-select: none;
 }
 
-/*.faq-question-wrapper input:focus + label,
-.faq-question-wrapper input:not(:placeholder-shown) + label,
-.faq-answer-wrapper textarea:focus + label,
-.faq-answer-wrapper textarea:not(:placeholder-shown) + label {
-  top: 0.5rem;
-  left: 0.6rem;
-  font-size: 0.75rem;
-  color: var(--label-active);
-  font-weight: 700;
-}
-*/
-
 input.faq-question:focus,
 textarea.faq-answer:focus {
   outline: none;
@@ -241,33 +229,43 @@ textarea.faq-answer:focus {
 }
 
 .btn {
-  background: var(--primary);
-  border: none;
-  border-radius: var(--radius);
-  padding: 0.75rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
   font-size: 1rem;
   font-weight: 600;
-  color: white;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  user-select: none;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover:not(:disabled) {
   background-color: var(--primary-hover);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  background-color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transform: translateY(0);
 }
 
 .btn:disabled {
-  background: var(--disabled-bg);
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .btn.secondary {
-  background: var(--success);
+  background-color: var(--success);
 }
 
 .btn.secondary:hover:not(:disabled) {
-  background: var(--success-hover);
+  background-color: var(--success-hover);
 }
 
 .tooltip-wrapper {

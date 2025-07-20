@@ -12,14 +12,11 @@
   --color-scrollbar-track: #161b22;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-body,
-html {
+body, html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -56,33 +53,29 @@ html {
   overflow: hidden;
 }
 
-.faq-list,
-.preview-section {
+.faq-list, .preview-section {
   flex: 1 1 50%;
   overflow-y: auto;
   padding: 1rem;
   background: var(--color-container-bg);
   border: 1px solid var(--color-border);
-  border-radius: 1rem; /* input radius + padding = section radius */
+  border-radius: calc(var(--radius) * 2); /* 1rem */
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
   display: flex;
   flex-direction: column;
 }
 
-.faq-list::-webkit-scrollbar,
-.preview-section::-webkit-scrollbar {
+.faq-list::-webkit-scrollbar, .preview-section::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-.faq-list::-webkit-scrollbar-thumb,
-.preview-section::-webkit-scrollbar-thumb {
+.faq-list::-webkit-scrollbar-thumb, .preview-section::-webkit-scrollbar-thumb {
   background-color: var(--color-scrollbar-thumb);
   border-radius: 0.625rem;
 }
 
-.faq-list::-webkit-scrollbar-track,
-.preview-section::-webkit-scrollbar-track {
+.faq-list::-webkit-scrollbar-track, .preview-section::-webkit-scrollbar-track {
   background: var(--color-scrollbar-track);
 }
 
@@ -115,27 +108,24 @@ html {
   margin-bottom: 1rem;
 }
 
-.faq-question-wrapper,
-.faq-answer-wrapper {
+.faq-question-wrapper, .faq-answer-wrapper {
   position: relative;
   width: 100%;
   display: block;
   overflow: hidden;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
 }
 
 .faq-question-wrapper {
-  border: 1px solid var(--color-border);
   border-bottom: none;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
-  background: var(--color-bg);
 }
 
 .faq-answer-wrapper {
-  border: 1px solid var(--color-border);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
-  background: var(--color-bg);
   margin-bottom: -0.25rem;
 }
 
@@ -205,7 +195,7 @@ textarea.faq-answer:focus {
   color: var(--color-bg);
   font-weight: 700;
   font-size: 1.2rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   border: none;
   cursor: pointer;
   text-align: center;
@@ -228,7 +218,7 @@ textarea.faq-answer:focus {
 .btn {
   background: var(--color-primary);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
   font-weight: 600;
@@ -258,9 +248,6 @@ textarea.faq-answer:focus {
 .tooltip {
   position: relative;
   display: inline-block;
-}
-
-.tooltip {
   user-select: none;
 }
 
@@ -273,7 +260,7 @@ textarea.faq-answer:focus {
   background-color: var(--color-success);
   color: var(--color-bg);
   padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   font-size: 0.875rem;
   font-weight: 600;
   white-space: nowrap;

@@ -149,7 +149,7 @@ html {
 .faq-question-wrapper input,
 .faq-answer-wrapper textarea {
   width: 100%;
-  padding: 2rem 0.75rem 0.4rem;
+  padding: 2rem 0.75rem 1rem;
   font-family: var(--font);
   font-size: 1rem;
   border: none;
@@ -204,15 +204,14 @@ textarea.faq-answer:focus {
 
 .delete-btn {
   position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
-  width: 1.6rem;
-  height: 1.6rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   background: var(--color-danger);
   color: var(--color-bg);
   font-weight: 700;
   font-size: 1.2rem;
-  line-height: 1.6rem;
   border-radius: 0.3rem;
   border: none;
   cursor: pointer;

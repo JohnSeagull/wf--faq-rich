@@ -68,10 +68,11 @@ body, html {
 }
 
 .split-container > div > .section-heading {
-  margin-bottom: 0.75rem auto;
-  user-select: none;
-  font-size: 1.25rem;
-  font-weight: 600;
+    margin-bottom: 0.75rem;
+    user-select: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    align-self: center;
 }
 
 .faq-list {

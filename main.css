@@ -269,14 +269,12 @@ textarea.faq-answer:focus {
   background: var(--success-hover);
 }
 
-.tooltip {
+.tooltip-wrapper {
   position: relative;
   display: inline-block;
-  user-select: none;
 }
 
-.tooltip::after {
-  content: attr(role);
+#copyMessage {
   position: absolute;
   bottom: 125%;
   left: 50%;
@@ -295,7 +293,11 @@ textarea.faq-answer:focus {
   z-index: 1;
 }
 
-.tooltip.show::after {
+#copyMessage.show {
   opacity: 1;
   visibility: visible;
+}
+
+.tooltip::after {
+  content: none !important;
 }

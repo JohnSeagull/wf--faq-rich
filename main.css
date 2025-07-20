@@ -311,7 +311,7 @@ textarea.faq-answer:focus {
 .faq-question-wrapper input:not(:placeholder-shown) + label,
 .faq-answer-wrapper textarea:focus + label,
 .faq-answer-wrapper textarea:not(:placeholder-shown) + label {
-  top: 0.5rem;
+  top: 0.75rem;
   left: 0.5rem;
   font-size: 0.625rem;
   color: var(--label-active);

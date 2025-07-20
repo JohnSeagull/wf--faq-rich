@@ -191,7 +191,7 @@ body, html {
   user-select: none;
 }
 
-.faq-question-wrapper input:focus + label,
+/*.faq-question-wrapper input:focus + label,
 .faq-question-wrapper input:not(:placeholder-shown) + label,
 .faq-answer-wrapper textarea:focus + label,
 .faq-answer-wrapper textarea:not(:placeholder-shown) + label {
@@ -201,6 +201,7 @@ body, html {
   color: var(--label-active);
   font-weight: 700;
 }
+*/
 
 input.faq-question:focus,
 textarea.faq-answer:focus {

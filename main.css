@@ -144,6 +144,7 @@ html {
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   background: var(--color-bg);
+  margin-bottom: -0.25rem;
 }
 
 .faq-question-wrapper input,

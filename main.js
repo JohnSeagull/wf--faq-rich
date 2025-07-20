@@ -13,14 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     faqPair.innerHTML = `
       <div class="faq-question-wrapper">
-        <label for="question-${index}">Question #${index + 1}:</label>
-        <input id="question-${index}" type="text" class="faq-question" />
+        <label>Question #${index + 1}:</label>
+        <input type="text" class="faq-question" placeholder="Enter your question here" />
       </div>
       <div class="faq-answer-wrapper">
-        <label for="answer-${index}">Answer #${index + 1}:</label>
-        <textarea id="answer-${index}" class="faq-answer"></textarea>
+        <label>Answer #${index + 1}:</label>
+        <textarea class="faq-answer" placeholder="Enter the answer here"></textarea>
       </div>
-      <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">Delete</button>
+      <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">−</button>
     `;
 
     // Delete handler

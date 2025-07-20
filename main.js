@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const faqContainer = document.getElementById("faqContainer");
   const addBtn = document.getElementById("addBtn");
-  const generateBtn = document.getElementById("generateBtn");
   const copyBtn = document.getElementById("copyBtn");
-  const output = document.getElementById("output");
+  const htmlPreview = document.getElementById("htmlPreview");
   const copyMessage = document.getElementById("copyMessage");
 
   // Add new FAQ pair block
@@ -14,12 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     faqPair.innerHTML = `
       <div class="faq-question-wrapper">
-        <label>Question #${index + 1}:</label>
-        <input type="text" class="faq-question" />
+        <label for="question-${index}">Question #${index + 1}:</label>
+        <input id="question-${index}" type="text" class="faq-question" />
       </div>
       <div class="faq-answer-wrapper">
-        <label>Answer #${index + 1}:</label>
-        <textarea class="faq-answer"></textarea>
+        <label for="answer-${index}">Answer #${index + 1}:</label>
+        <textarea id="answer-${index}" class="faq-answer"></textarea>
       </div>
       <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">Delete</button>
     `;
@@ -28,34 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
     faqPair.querySelector(".delete-btn").addEventListener("click", () => {
       faqPair.remove();
       refreshLabels();
-      updateCopyBtn();
+      updateUI();
     });
 
     faqContainer.appendChild(faqPair);
   }
 
-  // Refresh Q/A labels numbering
+  // Refresh Q/A labels numbering and aria attributes
   function refreshLabels() {
     Array.from(faqContainer.children).forEach((pair, i) => {
       pair.querySelector(".faq-question-wrapper label").textContent = `Question #${i + 1}:`;
+      pair.querySelector(".faq-question-wrapper label").setAttribute("for", `question-${i}`);
+      pair.querySelector(".faq-question").id = `question-${i}`;
+
       pair.querySelector(".faq-answer-wrapper label").textContent = `Answer #${i + 1}:`;
+      pair.querySelector(".faq-answer-wrapper label").setAttribute("for", `answer-${i}`);
+      pair.querySelector(".faq-answer").id = `answer-${i}`;
+
       pair.querySelector(".delete-btn").setAttribute("aria-label", `Delete question #${i + 1}`);
     });
-  }
-
-  // Enable/disable copy button if any Q&A filled
-  function updateCopyBtn() {
-    const questions = faqContainer.querySelectorAll(".faq-question");
-    const answers = faqContainer.querySelectorAll(".faq-answer");
-    let enabled = false;
-
-    for (let i = 0; i < questions.length; i++) {
-      if (questions[i].value.trim() && answers[i].value.trim()) {
-        enabled = true;
-        break;
-      }
-    }
-    copyBtn.disabled = !enabled;
   }
 
   // Escape HTML special chars
@@ -94,6 +84,27 @@ document.addEventListener("DOMContentLoaded", () => {
     return html;
   }
 
+  // Update preview textarea and copy button state
+  function updateUI() {
+    const html = generateHtml();
+    htmlPreview.value = html;
+
+    // Enable copy if at least one Q&A filled
+    const questions = faqContainer.querySelectorAll(".faq-question");
+    const answers = faqContainer.querySelectorAll(".faq-answer");
+    let hasContent = false;
+    for (let i = 0; i < questions.length; i++) {
+      if (questions[i].value.trim() && answers[i].value.trim()) {
+        hasContent = true;
+        break;
+      }
+    }
+    copyBtn.disabled = !hasContent;
+
+    // Hide copy message on changes
+    copyMessage.style.display = "none";
+  }
+
   // Copy text to clipboard with fallback
   async function copyToClipboard(text) {
     if (navigator.clipboard) {
@@ -101,10 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
         await navigator.clipboard.writeText(text);
         return true;
       } catch {
-        // fallback
+        // fallback below
       }
     }
-    // fallback for older browsers
     const textarea = document.createElement("textarea");
     textarea.value = text;
     textarea.style.position = "fixed";
@@ -122,31 +132,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listeners
-
   addBtn.addEventListener("click", () => {
     addPair();
-    updateCopyBtn();
+    updateUI();
   });
 
-  faqContainer.addEventListener("input", updateCopyBtn);
-
-  generateBtn.addEventListener("click", () => {
-    const html = generateHtml();
-    if (!output) return;
-    output.value = html;
-    copyMessage.style.display = "none";
-  });
+  faqContainer.addEventListener("input", updateUI);
 
   copyBtn.addEventListener("click", async () => {
-    if (!output) return;
-    const success = await copyToClipboard(output.value);
+    const success = await copyToClipboard(htmlPreview.value);
     if (success) {
       copyMessage.style.display = "block";
-      setTimeout(() => (copyMessage.style.display = "none"), 2000);
+      setTimeout(() => {
+        copyMessage.style.display = "none";
+      }, 2000);
     }
   });
 
-  // Init with one pair
+  // Initialize with one pair
   addPair();
-  updateCopyBtn();
+  updateUI();
 });

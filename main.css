@@ -307,3 +307,12 @@ textarea.faq-answer:focus {
   opacity: 1;
   visibility: visible;
 }
+.faq-question-wrapper input:focus + label,
+.faq-question-wrapper input:not(:placeholder-shown) + label,
+.faq-answer-wrapper textarea:focus + label,
+.faq-answer-wrapper textarea:not(:placeholder-shown) + label {
+  top: 0.25rem;
+  left: 0.75rem;
+  font-size: 0.6rem;
+  color: var(--label-active);
+}

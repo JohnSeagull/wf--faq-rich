@@ -125,6 +125,7 @@ html {
 
 .faq-question-wrapper,
 .faq-answer-wrapper {
+  position: relative;
   width: 100%;
   display: block;
 }
@@ -145,20 +146,10 @@ html {
   background: var(--color-bg);
 }
 
-.faq-question-wrapper label,
-.faq-answer-wrapper label {
-  display: block;
-  padding: 0.4rem 0.75rem 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #8b949e;
-  user-select: text;
-}
-
-input.faq-question,
-textarea.faq-answer {
+.faq-question-wrapper input,
+.faq-answer-wrapper textarea {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: 1.2rem 0.75rem 0.4rem;
   font-family: var(--font);
   font-size: 1rem;
   border: none;
@@ -170,11 +161,45 @@ textarea.faq-answer {
   box-sizing: border-box;
 }
 
+.faq-answer-wrapper textarea {
+  min-height: 4rem;
+}
+
+.faq-question-wrapper input::placeholder,
+.faq-answer-wrapper textarea::placeholder {
+  color: transparent;
+}
+
+.faq-question-wrapper label,
+.faq-answer-wrapper label {
+  position: absolute;
+  top: 1rem;
+  left: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8b949e;
+  pointer-events: none;
+  user-select: none;
+  transition: all 0.2s ease;
+  background: var(--color-bg);
+  padding: 0 0.25rem;
+}
+
+.faq-question-wrapper input:focus + label,
+.faq-question-wrapper input:not(:placeholder-shown) + label,
+.faq-answer-wrapper textarea:focus + label,
+.faq-answer-wrapper textarea:not(:placeholder-shown) + label {
+  top: 0.2rem;
+  left: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
 input.faq-question:focus,
 textarea.faq-answer:focus {
   outline: none;
   background: #161b22;
-  border: none;
   color: var(--color-text);
 }
 

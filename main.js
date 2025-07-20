@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.getElementById("addBtn");
   const copyBtn = document.getElementById("copyBtn");
   const htmlPreview = document.getElementById("htmlPreview");
-  const copyMessage = document.getElementById("copyMessage");
+  const copyTooltip = document.getElementById("copyMessage"); // переиспользуем id как tooltip
 
   function addPair() {
     const index = faqContainer.children.length;
@@ -98,31 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     copyBtn.disabled = !hasContent;
 
-    copyMessage.style.display = "none";
+    copyTooltip.classList.remove("show");
   }
 
-  async function copyToClipboard(text) {
-    if (navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch {}
-    }
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.style.position = "fixed";
-    textarea.style.opacity = 0;
-    document.body.appendChild(textarea);
-    textarea.select();
+  copyBtn.addEventListener("click", async () => {
     try {
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      return true;
-    } catch {
-      document.body.removeChild(textarea);
-      return false;
+      await navigator.clipboard.writeText(htmlPreview.value);
+      copyTooltip.classList.add("show");
+      setTimeout(() => copyTooltip.classList.remove("show"), 1500);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
     }
-  }
+  });
 
   addBtn.addEventListener("click", () => {
     addPair();
@@ -130,16 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   faqContainer.addEventListener("input", updateUI);
-
-  copyBtn.addEventListener("click", async () => {
-    const success = await copyToClipboard(htmlPreview.value);
-    if (success) {
-      copyMessage.style.display = "block";
-      setTimeout(() => {
-        copyMessage.style.display = "none";
-      }, 2000);
-    }
-  });
 
   addPair();
   updateUI();

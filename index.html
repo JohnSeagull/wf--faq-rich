@@ -13,7 +13,7 @@
     <h1 class="title">FAQ Generator</h1>
 
     <div class="split-container">
-      <section id="faqContainer" class="faq-list" aria-label="FAQ editor">
+      <section id="faqContainer" class="faq-list" aria-label="FAQ editor" role="list">
         <h2 class="section-heading">Enter Questions & Answers</h2>
       </section>
 
@@ -25,10 +25,8 @@
 
     <div class="controls">
       <div class="tooltip-wrapper">
-        <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard">📋 Copy HTML</button>
-        <div id="copyMessage" class="tooltip" role="status" aria-live="polite">
-          <span class="tooltiptext">Copied!</span>
-        </div>
+        <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard" aria-describedby="copyMessage">📋 Copy HTML</button>
+        <div id="copyMessage" class="tooltip" role="status" aria-live="polite">Copied!</div>
       </div>
       <button id="addBtn" class="btn" aria-label="Add new Q&A">➕ Add Q&A</button>
     </div>

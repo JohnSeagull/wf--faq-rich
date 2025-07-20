@@ -188,7 +188,7 @@ html {
 .faq-question-wrapper input:not(:placeholder-shown) + label,
 .faq-answer-wrapper textarea:focus + label,
 .faq-answer-wrapper textarea:not(:placeholder-shown) + label {
-  top: 0.2rem;
+  top: 0.5rem;
   left: 0.6rem;
   font-size: 0.75rem;
   color: var(--color-primary);

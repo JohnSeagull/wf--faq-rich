@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FAQ Generator — Enter Questions & Answers</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
   <script defer src="main.js"></script>
 </head>
@@ -12,24 +12,21 @@
   <main class="container" role="main">
     <h1 class="title">FAQ Generator</h1>
 
-    <div id="faqContainer" class="faq-list"></div>
+    <div class="split-container">
+      <section id="faqContainer" class="faq-list" aria-label="FAQ editor"></section>
+
+      <section class="preview-section" aria-label="HTML Preview">
+        <h2 class="preview-title">HTML Preview</h2>
+        <textarea id="htmlPreview" readonly aria-live="polite" aria-atomic="true"></textarea>
+      </section>
+    </div>
 
     <div class="controls">
-      <button id="addBtn" class="btn" aria-label="Add new Q&A">
-        ➕ Add Q&A
-      </button>
-
-      <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard">
-        📋 Copy HTML
-      </button>
+      <button id="addBtn" class="btn" aria-label="Add new Q&A">➕ Add Q&A</button>
+      <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard">📋 Copy HTML</button>
     </div>
 
     <div id="copyMessage" class="copy-message" role="status" aria-live="polite">Copied!</div>
-
-    <section class="preview-section" aria-label="HTML Preview">
-      <h2 class="preview-title">HTML Preview</h2>
-      <textarea id="htmlPreview" readonly></textarea>
-    </section>
   </main>
 </body>
 </html>

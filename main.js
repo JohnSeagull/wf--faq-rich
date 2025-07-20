@@ -5,25 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const htmlPreview = document.getElementById("htmlPreview");
   const copyMessage = document.getElementById("copyMessage");
 
-  // Add new FAQ pair block
   function addPair() {
     const index = faqContainer.children.length;
     const faqPair = document.createElement("div");
     faqPair.className = "faq-pair";
 
     faqPair.innerHTML = `
-      <div class="faq-question-wrapper">
-        <label>Question #${index + 1}:</label>
-        <input type="text" class="faq-question" placeholder="Enter your question here" />
+      <div class="faq-question-wrapper floating-label">
+        <input type="text" id="question-${index}" class="faq-question" placeholder=" " />
+        <label for="question-${index}">Question #${index + 1}</label>
       </div>
-      <div class="faq-answer-wrapper">
-        <label>Answer #${index + 1}:</label>
-        <textarea class="faq-answer" placeholder="Enter the answer here"></textarea>
+      <div class="faq-answer-wrapper floating-label">
+        <textarea id="answer-${index}" class="faq-answer" placeholder=" "></textarea>
+        <label for="answer-${index}">Answer #${index + 1}</label>
       </div>
       <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">−</button>
     `;
 
-    // Delete handler
     faqPair.querySelector(".delete-btn").addEventListener("click", () => {
       faqPair.remove();
       refreshLabels();
@@ -33,22 +31,24 @@ document.addEventListener("DOMContentLoaded", () => {
     faqContainer.appendChild(faqPair);
   }
 
-  // Refresh Q/A labels numbering and aria attributes
   function refreshLabels() {
     Array.from(faqContainer.children).forEach((pair, i) => {
-      pair.querySelector(".faq-question-wrapper label").textContent = `Question #${i + 1}:`;
-      pair.querySelector(".faq-question-wrapper label").setAttribute("for", `question-${i}`);
-      pair.querySelector(".faq-question").id = `question-${i}`;
+      const qInput = pair.querySelector(".faq-question");
+      const qLabel = pair.querySelector(".faq-question-wrapper label");
+      qLabel.textContent = `Question #${i + 1}`;
+      qLabel.setAttribute("for", `question-${i}`);
+      qInput.id = `question-${i}`;
 
-      pair.querySelector(".faq-answer-wrapper label").textContent = `Answer #${i + 1}:`;
-      pair.querySelector(".faq-answer-wrapper label").setAttribute("for", `answer-${i}`);
-      pair.querySelector(".faq-answer").id = `answer-${i}`;
+      const aInput = pair.querySelector(".faq-answer");
+      const aLabel = pair.querySelector(".faq-answer-wrapper label");
+      aLabel.textContent = `Answer #${i + 1}`;
+      aLabel.setAttribute("for", `answer-${i}`);
+      aInput.id = `answer-${i}`;
 
       pair.querySelector(".delete-btn").setAttribute("aria-label", `Delete question #${i + 1}`);
     });
   }
 
-  // Escape HTML special chars
   function escapeHtml(text) {
     return text.replace(/&/g, "&amp;")
                .replace(/</g, "&lt;")
@@ -57,12 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
                .replace(/'/g, "&#039;");
   }
 
-  // Generate structured FAQ HTML output
   function generateHtml() {
     const pairs = faqContainer.querySelectorAll(".faq-pair");
     let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n`;
 
-    pairs.forEach((pair, i) => {
+    pairs.forEach(pair => {
       const qInput = pair.querySelector(".faq-question");
       const aInput = pair.querySelector(".faq-answer");
       if (!qInput || !aInput) return;
@@ -84,12 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return html;
   }
 
-  // Update preview textarea and copy button state
   function updateUI() {
     const html = generateHtml();
     htmlPreview.value = html;
 
-    // Enable copy if at least one Q&A filled
     const questions = faqContainer.querySelectorAll(".faq-question");
     const answers = faqContainer.querySelectorAll(".faq-answer");
     let hasContent = false;
@@ -101,19 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     copyBtn.disabled = !hasContent;
 
-    // Hide copy message on changes
     copyMessage.style.display = "none";
   }
 
-  // Copy text to clipboard with fallback
   async function copyToClipboard(text) {
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(text);
         return true;
-      } catch {
-        // fallback below
-      }
+      } catch {}
     }
     const textarea = document.createElement("textarea");
     textarea.value = text;
@@ -131,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Event listeners
   addBtn.addEventListener("click", () => {
     addPair();
     updateUI();
@@ -149,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialize with one pair
   addPair();
   updateUI();
 });

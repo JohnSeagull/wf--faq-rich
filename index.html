@@ -1,130 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>FAQ Generator — Enter Questions & Answers</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css" />
     <script defer src="main.js"></script>
-    <style>
-      :root {
-        --font: 'Inter', sans-serif;
-        --radius: 1rem;
-        --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-        --color-bg: #f5f6f8;
-        --color-white: #ffffff;
-        --color-text: #1a1a1a;
-        --color-primary: #0d6efd;
-        --color-danger: #dc3545;
-        --color-success: #28a745;
-        --color-border: #dce1e7;
-      }
-
-      body {
-        font-family: var(--font);
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        max-width: 880px;
-        margin: 3rem auto;
-        padding: 0 1rem;
-        line-height: 1.6;
-      }
-
-      h1 {
-        font-size: 2rem;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-
-      .faq-pair {
-        display: flex;
-        gap: 1.5rem;
-        background: var(--color-white);
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        border: 1px solid var(--color-border);
-      }
-
-      .faq-question-wrapper,
-      .faq-answer-wrapper {
-        flex: 1 1 0;
-        display: flex;
-        flex-direction: column;
-      }
-
-      label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        color: #555;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 100%;
-        font-family: var(--font);
-        font-size: 1rem;
-        padding: 0.75rem 1rem;
-        border: 1px solid var(--color-border);
-        border-radius: 0.75rem;
-        background: #fff;
-        transition: border-color 0.2s ease;
-      }
-
-      input[type="text"]:focus,
-      textarea:focus {
-        outline: none;
-        border-color: var(--color-primary);
-      }
-
-      textarea {
-        resize: vertical;
-        min-height: 4rem;
-      }
-
-      button {
-        font-family: var(--font);
-        font-size: 1rem;
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        transition: background 0.2s ease;
-        color: white;
-      }
-
-      #addBtn {
-        background: var(--color-success);
-        margin-bottom: 2rem;
-      }
-
-      button:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-      }
-
-      .delete-btn {
-        background: var(--color-danger);
-        font-size: 0.875rem;
-        padding: 0.6rem 1rem;
-        align-self: center;
-      }
-
-      #copyMessage {
-        color: var(--color-success);
-        font-weight: 500;
-        margin-top: 1rem;
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
+</head>
+<body>
     <h1>FAQ Generator</h1>
     <div id="faqContainer"></div>
+
     <button id="addBtn">+ Add Q&A</button>
     <button id="copyBtn" disabled>Copy HTML to Clipboard</button>
     <div id="copyMessage">Copied!</div>
-  </body>
+</body>
 </html>

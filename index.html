@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>FAQ Generator — Введите вопросы и ответы</title>
+  <title>FAQ Generator — Enter Questions & Answers</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,27 +16,46 @@
       margin-bottom: 1rem;
     }
     .faq-pair {
+      display: flex;
+      align-items: flex-start;
       background: white;
       padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 6px;
       box-shadow: 0 0 6px #ddd;
+      gap: 1rem;
+    }
+    .faq-pair > * {
+      flex-shrink: 0;
     }
     label {
-      display: block;
       font-weight: bold;
       margin-bottom: 0.3rem;
+      display: block;
     }
-    input[type="text"],
+    .faq-question-wrapper,
+    .faq-answer-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 0;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
     textarea {
       width: 100%;
-      box-sizing: border-box;
+      min-height: 3rem;
       padding: 0.5rem;
-      margin-bottom: 0.7rem;
       font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       resize: vertical;
+      box-sizing: border-box;
     }
     button {
       padding: 0.7rem 1.5rem;
@@ -47,6 +66,7 @@
       border-radius: 4px;
       cursor: pointer;
       margin-right: 1rem;
+      user-select: none;
     }
     button:disabled {
       background: #999;
@@ -58,99 +78,132 @@
       margin-top: 0.5rem;
       display: none;
     }
-    #addPairBtn {
+    #addBtn {
       margin-bottom: 1rem;
       background: #28a745;
+    }
+    .delete-btn {
+      background: #dc3545;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      height: fit-content;
+      align-self: center;
     }
   </style>
 </head>
 <body>
-  <h1>Генератор FAQ</h1>
-  <div id="faqContainer">
-    <!-- Пары вопрос-ответ вставляются сюда -->
-  </div>
+  <h1>FAQ Generator</h1>
+  <div id="faqContainer"></div>
 
-  <button id="addPairBtn">+ Добавить вопрос и ответ</button>
-  <button id="copyBtn" disabled>Скопировать HTML в буфер</button>
-  <div id="copyMessage">Скопировано в буфер!</div>
+  <button id="addBtn">+ Add Q&A</button>
+  <button id="copyBtn" disabled>Copy HTML to Clipboard</button>
+  <div id="copyMessage">Copied!</div>
 
 <script>
-  const faqContainer = document.getElementById('faqContainer');
-  const addPairBtn = document.getElementById('addPairBtn');
+  const container = document.getElementById('faqContainer');
+  const addBtn = document.getElementById('addBtn');
   const copyBtn = document.getElementById('copyBtn');
-  const copyMessage = document.getElementById('copyMessage');
+  const copyMsg = document.getElementById('copyMessage');
 
-  function createFaqPair(index) {
+  // Create a new FAQ pair block with horizontal layout
+  function addPair(index) {
     const div = document.createElement('div');
     div.className = 'faq-pair';
 
-    const labelQ = document.createElement('label');
-    labelQ.textContent = `Вопрос #${index + 1}`;
-    const inputQ = document.createElement('input');
-    inputQ.type = 'text';
-    inputQ.className = 'faq-question';
-    inputQ.required = true;
+    // Question block
+    const qWrapper = document.createElement('div');
+    qWrapper.className = 'faq-question-wrapper';
+    const qLabel = document.createElement('label');
+    qLabel.textContent = `Question #${index + 1}`;
+    const qInput = document.createElement('input');
+    qInput.type = 'text';
+    qInput.className = 'question';
+    qInput.required = true;
+    qWrapper.appendChild(qLabel);
+    qWrapper.appendChild(qInput);
 
-    const labelA = document.createElement('label');
-    labelA.textContent = `Ответ #${index + 1}`;
-    const textareaA = document.createElement('textarea');
-    textareaA.className = 'faq-answer';
-    textareaA.rows = 3;
-    textareaA.required = true;
+    // Answer block
+    const aWrapper = document.createElement('div');
+    aWrapper.className = 'faq-answer-wrapper';
+    const aLabel = document.createElement('label');
+    aLabel.textContent = `Answer #${index + 1}`;
+    const aInput = document.createElement('textarea');
+    aInput.className = 'answer';
+    aInput.required = true;
+    aWrapper.appendChild(aLabel);
+    aWrapper.appendChild(aInput);
 
-    div.appendChild(labelQ);
-    div.appendChild(inputQ);
-    div.appendChild(labelA);
-    div.appendChild(textareaA);
+    // Delete button
+    const delBtn = document.createElement('button');
+    delBtn.className = 'delete-btn';
+    delBtn.type = 'button';
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', () => {
+      div.remove();
+      refreshLabels();
+      updateCopyBtn();
+    });
+
+    div.appendChild(qWrapper);
+    div.appendChild(aWrapper);
+    div.appendChild(delBtn);
 
     return div;
   }
 
-  function updateCopyButtonState() {
-    const questions = document.querySelectorAll('.faq-question');
-    const answers = document.querySelectorAll('.faq-answer');
+  // Refresh question/answer labels numbering
+  function refreshLabels() {
+    const pairs = container.querySelectorAll('.faq-pair');
+    pairs.forEach((pair, i) => {
+      pair.querySelector('.faq-question-wrapper label').textContent = `Question #${i + 1}`;
+      pair.querySelector('.faq-answer-wrapper label').textContent = `Answer #${i + 1}`;
+    });
+  }
 
-    // Проверяем, что есть хотя бы один непустой вопрос и ответ
-    let enable = false;
+  // Enable copy button if at least one Q&A filled
+  function updateCopyBtn() {
+    const questions = container.querySelectorAll('.question');
+    const answers = container.querySelectorAll('.answer');
+    let enabled = false;
     for(let i = 0; i < questions.length; i++) {
-      if (questions[i].value.trim() !== '' && answers[i].value.trim() !== '') {
-        enable = true;
+      if(questions[i].value.trim() && answers[i].value.trim()) {
+        enabled = true;
         break;
       }
     }
-    copyBtn.disabled = !enable;
+    copyBtn.disabled = !enabled;
   }
 
+  // Generate HTML with structured data microdata
   function generateHtml() {
-  const container = document.getElementById("faqContainer");
-  const pairs = container.querySelectorAll(".faq-pair");
+    const pairs = container.querySelectorAll('.faq-pair');
+    let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n  <div class="custom-faq">\n`;
 
-  let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n  <div class="custom-faq">\n`;
+    pairs.forEach((pair, i) => {
+      const qInput = pair.querySelector('.question');
+      const aInput = pair.querySelector('.answer');
+      if (!qInput || !aInput) return;
 
-  pairs.forEach((pair, index) => {
-    const question = pair.querySelector(".question").value.trim();
-    const answer = pair.querySelector(".answer").value.trim();
+      const q = qInput.value.trim();
+      const a = aInput.value.trim();
+      if (q && a) {
+        html += `    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
+        html += `      <button class="faq-question" aria-expanded="false" aria-controls="faq${i}" id="faq${i}-button">\n`;
+        html += `        <strong itemprop="name">${escapeHtml(q)}</strong>\n`;
+        html += `      </button>\n`;
+        html += `      <div id="faq${i}" class="faq-answer" hidden itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">\n`;
+        html += `        <p itemprop="text">${escapeHtml(a)}</p>\n`;
+        html += `      </div>\n`;
+        html += `    </div>\n`;
+      }
+    });
 
-    if (question && answer) {
-      const escapedQuestion = escapeHtml(question);
-      const escapedAnswer = escapeHtml(answer);
+    html += `  </div>\n</div>`;
+    return html;
+  }
 
-      html += `    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
-      html += `      <button class="faq-question" aria-expanded="false" aria-controls="faq${index}" id="faq${index}-button">\n`;
-      html += `        <strong itemprop="name">${escapedQuestion}</strong>\n`;
-      html += `      </button>\n`;
-      html += `      <div id="faq${index}" class="faq-answer" hidden itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">\n`;
-      html += `        <p itemprop="text">${escapedAnswer}</p>\n`;
-      html += `      </div>\n`;
-      html += `    </div>\n`;
-    }
-  });
-
-  html += `  </div>\n</div>`;
-  return html;
-}
-
-  // Экранируем спецсимволы для HTML
+  // Escape HTML special chars
   function escapeHtml(text) {
     return text.replace(/&/g, "&amp;")
                .replace(/</g, "&lt;")
@@ -159,31 +212,29 @@
                .replace(/'/g, "&#039;");
   }
 
+  // Copy text to clipboard
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-      copyMessage.style.display = 'block';
-      setTimeout(() => copyMessage.style.display = 'none', 2000);
+      copyMsg.style.display = 'block';
+      setTimeout(() => copyMsg.style.display = 'none', 2000);
     });
   }
 
-  addPairBtn.addEventListener('click', () => {
-    const newPair = createFaqPair(faqContainer.children.length);
-    faqContainer.appendChild(newPair);
-    updateCopyButtonState();
+  // Event Listeners
+  addBtn.addEventListener('click', () => {
+    container.appendChild(addPair(container.children.length));
+    updateCopyBtn();
   });
 
-  faqContainer.addEventListener('input', () => {
-    updateCopyButtonState();
-  });
+  container.addEventListener('input', updateCopyBtn);
 
   copyBtn.addEventListener('click', () => {
     const html = generateHtml();
     copyToClipboard(html);
   });
 
-  // Инициализация - добавляем пару по умолчанию
-  addPairBtn.click();
-
+  // Init with one pair
+  addBtn.click();
 </script>
 </body>
 </html>

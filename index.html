@@ -14,7 +14,7 @@
 
     <div class="split-container">
       <section id="faqContainer" class="faq-list" aria-label="FAQ editor">
-        <h2 class="section-title">Enter Questions & Answers</h2>
+        <h2 class="section-heading">Enter Questions & Answers</h2>
       </section>
 
       <section class="preview-section" aria-label="HTML Preview">
@@ -24,11 +24,11 @@
     </div>
 
     <div class="controls">
+      <div class="tooltip-wrapper">
+        <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard">📋 Copy HTML</button>
+        <div id="copyMessage" class="tooltip" role="status" aria-live="polite">Copied!</div>
+      </div>
       <button id="addBtn" class="btn" aria-label="Add new Q&A">➕ Add Q&A</button>
-      <button id="copyBtn" class="btn secondary tooltip-parent" disabled aria-label="Copy HTML to clipboard">
-        📋 Copy HTML
-        <span id="copyTooltip" class="tooltip" role="status" aria-live="polite">Copied!</span>
-      </button>
     </div>
   </main>
 </body>

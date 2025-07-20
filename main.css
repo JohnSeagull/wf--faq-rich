@@ -1,15 +1,17 @@
 :root {
   --font: 'Inter', sans-serif;
   --radius: 1rem;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  --color-bg: #f5f6f8;
-  --color-white: #ffffff;
-  --color-text: #1a1a1a;
-  --color-primary: #0d6efd;
-  --color-danger: #dc3545;
-  --color-success: #28a745;
-  --color-border: #dce1e7;
-  --color-secondary-bg: #e9ecef;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+  --color-bg: #121212;
+  --color-white: #e0e0e0;
+  --color-text: #e0e0e0;
+  --color-primary: #7f5af0; /* яркий фиолетовый */
+  --color-danger: #f85149; /* насыщенный красный */
+  --color-success: #4ade80; /* яркий зеленый */
+  --color-border: #333;
+  --color-secondary-bg: #1e1e2f;
+  --color-scrollbar-thumb: #7f5af0;
+  --color-scrollbar-track: #222;
 }
 
 *,
@@ -35,6 +37,7 @@ html {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 4rem);
+  user-select: none;
 }
 
 .title {
@@ -42,9 +45,9 @@ html {
   font-weight: 700;
   text-align: center;
   margin-bottom: 1.5rem;
-  user-select: none;
   color: var(--color-primary);
   letter-spacing: 0.02em;
+  user-select: text;
 }
 
 .split-container {
@@ -53,8 +56,8 @@ html {
   gap: 1.5rem;
   height: 100%;
   border-radius: var(--radius);
-  background: var(--color-white);
-  box-shadow: var(--shadow);
+  background: var(--color-secondary-bg);
+  box-shadow: 0 0 20px rgba(127, 90, 240, 0.5);
   overflow: hidden;
 }
 
@@ -66,7 +69,7 @@ html {
   padding: 1rem 1.5rem;
   border-right: 1px solid var(--color-border);
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) transparent;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
 .faq-list::-webkit-scrollbar {
@@ -74,8 +77,12 @@ html {
 }
 
 .faq-list::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
+  background-color: var(--color-scrollbar-thumb);
   border-radius: 10px;
+}
+
+.faq-list::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
 }
 
 /* Right preview */
@@ -85,10 +92,10 @@ html {
   display: flex;
   flex-direction: column;
   padding: 1rem 1.5rem;
-  background: var(--color-secondary-bg);
-  border-radius: 0  var(--radius) var(--radius) 0;
+  background: var(--color-bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
   overflow-y: auto;
-  box-shadow: inset 0 0 10px #ccc;
+  box-shadow: inset 0 0 15px #3f2a8e88;
 }
 
 .preview-title {
@@ -105,13 +112,14 @@ html {
   resize: none;
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
-  background: white;
+  background: #1c1c2c;
   padding: 1rem;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--color-white);
   line-height: 1.4;
   overflow-y: auto;
+  box-shadow: inset 0 0 10px #7f5af0aa;
 }
 
 /* FAQ pairs */
@@ -120,13 +128,19 @@ html {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.25rem;
-  background: var(--color-white);
+  background: #1a1a2e;
   padding: 1rem 1.25rem;
   border-radius: var(--radius);
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.12);
+  box-shadow: 0 4px 12px rgba(127, 90, 240, 0.3);
   border: 1px solid var(--color-border);
   align-items: flex-start;
   user-select: none;
+  transition: background 0.3s ease;
+}
+
+.faq-pair:hover {
+  background: #2c2a5a;
+  box-shadow: 0 6px 20px rgba(127, 90, 240, 0.6);
 }
 
 .faq-question-wrapper,
@@ -140,7 +154,7 @@ label {
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
-  color: #666;
+  color: #b0aeea;
   user-select: text;
 }
 
@@ -152,18 +166,26 @@ textarea {
   padding: 0.6rem 1rem;
   border: 1.5px solid var(--color-border);
   border-radius: 0.75rem;
-  background: #fff;
+  background: #2a2a45;
+  color: var(--color-white);
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
   box-sizing: border-box;
   resize: vertical;
   min-height: 3.5rem;
 }
 
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #8a88b9;
+  opacity: 0.7;
+}
+
 input[type="text"]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 6px var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary);
+  background: #352f7a;
 }
 
 /* Delete button */
@@ -182,10 +204,12 @@ textarea:focus {
   height: fit-content;
   align-self: center;
   transition: background 0.2s ease;
+  box-shadow: 0 0 8px var(--color-danger);
 }
 
 .delete-btn:hover {
-  background: #b02a37;
+  background: #a6363f;
+  box-shadow: 0 0 12px var(--color-danger);
 }
 
 /* Controls */
@@ -207,25 +231,34 @@ textarea:focus {
   font-weight: 600;
   color: white;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
   user-select: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-shadow: 0 0 6px var(--color-primary);
 }
 
 .btn:hover:not(:disabled) {
-  background: #084cd9;
+  background: #9b79ff;
+  box-shadow: 0 0 14px var(--color-primary);
 }
 
 .btn:disabled {
-  background: #bbb;
+  background: #444;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .btn.secondary {
   background: var(--color-success);
+  box-shadow: 0 0 6px var(--color-success);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #6fcf97;
+  box-shadow: 0 0 14px var(--color-success);
 }
 
 .copy-message {
@@ -235,4 +268,5 @@ textarea:focus {
   text-align: center;
   user-select: none;
   display: none;
+  text-shadow: 0 0 8px var(--color-success);
 }

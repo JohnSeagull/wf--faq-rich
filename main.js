@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.getElementById("addBtn");
   const copyBtn = document.getElementById("copyBtn");
   const htmlPreview = document.getElementById("htmlPreview");
-  const copyTooltip = document.getElementById("copyMessage"); // переиспользуем id как tooltip
+  const copyTooltip = document.getElementById("copyMessage");
 
   function addPair() {
     const index = faqContainer.children.length;
@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     faqPair.innerHTML = `
       <div class="faq-question-wrapper floating-label">
-        <input type="text" id="question-${index}" class="faq-question" placeholder=" " />
+        <input type="text" id="question-${index}" class="faq-question" placeholder=" " autocomplete="off" />
         <label for="question-${index}">Question #${index + 1}</label>
       </div>
       <div class="faq-answer-wrapper floating-label">
-        <textarea id="answer-${index}" class="faq-answer" placeholder=" "></textarea>
+        <textarea id="answer-${index}" class="faq-answer" placeholder=" " autocomplete="off"></textarea>
         <label for="answer-${index}">Answer #${index + 1}</label>
       </div>
       <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">−</button>

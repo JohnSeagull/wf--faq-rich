@@ -6,20 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const copyTooltip = document.getElementById("copyMessage");
 
   function addPair() {
-    const index = faqContainer.children.length;
     const faqPair = document.createElement("div");
     faqPair.className = "faq-pair";
 
     faqPair.innerHTML = `
       <div class="faq-question-wrapper floating-label">
-        <input type="text" id="question-${index}" class="faq-question" placeholder=" " autocomplete="off" />
-        <label for="question-${index}">Question #${index + 1}</label>
+        <input type="text" class="faq-question" placeholder=" " autocomplete="off" />
+        <label>Question</label>
       </div>
       <div class="faq-answer-wrapper floating-label">
-        <textarea id="answer-${index}" class="faq-answer" placeholder=" " autocomplete="off"></textarea>
-        <label for="answer-${index}">Answer #${index + 1}</label>
+        <textarea class="faq-answer" placeholder=" " autocomplete="off"></textarea>
+        <label>Answer</label>
       </div>
-      <button class="delete-btn" type="button" aria-label="Delete question #${index + 1}">−</button>
+      <button class="delete-btn" type="button">−</button>
     `;
 
     faqPair.querySelector(".delete-btn").addEventListener("click", () => {
@@ -29,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     faqContainer.appendChild(faqPair);
+    refreshLabels(); // Обновляем нумерацию сразу после вставки
   }
 
   function refreshLabels() {
@@ -90,14 +90,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const questions = faqContainer.querySelectorAll(".faq-question");
     const answers = faqContainer.querySelectorAll(".faq-answer");
     let hasContent = false;
+
     for (let i = 0; i < questions.length; i++) {
       if (questions[i].value.trim() && answers[i].value.trim()) {
         hasContent = true;
         break;
       }
     }
-    copyBtn.disabled = !hasContent;
 
+    copyBtn.disabled = !hasContent;
     copyTooltip.classList.remove("show");
   }
 
@@ -118,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   faqContainer.addEventListener("input", updateUI);
 
+  // Инициализация
   addPair();
   updateUI();
 });

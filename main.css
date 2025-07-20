@@ -63,7 +63,7 @@ html {
   padding: 1rem;
   background: var(--color-container-bg);
   border: 1px solid var(--color-border);
-  border-radius: 1rem; /* 0.5rem input + 0.5rem padding */
+  border-radius: 1rem; /* input radius + padding = section radius */
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
   display: flex;
@@ -91,6 +91,7 @@ html {
   font-weight: 600;
   font-size: 1.25rem;
   text-align: center;
+  user-select: none;
 }
 
 #htmlPreview {
@@ -149,6 +150,8 @@ html {
   color: var(--color-text);
   resize: vertical;
   min-height: 3.25rem;
+  border-radius: 0;
+  box-sizing: border-box;
 }
 
 .faq-answer-wrapper textarea {
@@ -232,6 +235,7 @@ textarea.faq-answer:focus {
   color: white;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  user-select: none;
 }
 
 .btn:hover:not(:disabled) {
@@ -256,26 +260,31 @@ textarea.faq-answer:focus {
   display: inline-block;
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
+.tooltip {
+  user-select: none;
+}
+
+.tooltip::after {
+  content: attr(role);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: var(--color-success);
   color: var(--color-bg);
-  text-align: center;
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
   white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  visibility: hidden;
+  z-index: 1;
 }
 
-.tooltip.show .tooltiptext {
-  visibility: visible;
+.tooltip.show::after {
   opacity: 1;
+  visibility: visible;
 }

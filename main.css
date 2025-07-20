@@ -149,7 +149,7 @@ html {
 .faq-question-wrapper input,
 .faq-answer-wrapper textarea {
   width: 100%;
-  padding: 1.2rem 0.75rem 0.4rem;
+  padding: 2rem 0.75rem 0.4rem;
   font-family: var(--font);
   font-size: 1rem;
   border: none;

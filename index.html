@@ -122,28 +122,33 @@
   }
 
   function generateHtml() {
-    const questions = document.querySelectorAll('.faq-question');
-    const answers = document.querySelectorAll('.faq-answer');
+  const container = document.getElementById("faqContainer");
+  const pairs = container.querySelectorAll(".faq-pair");
 
-    let html = `<div class="custom-faq">\n`;
-    for(let i = 0; i < questions.length; i++) {
-      const q = questions[i].value.trim();
-      const a = answers[i].value.trim();
-      if(q && a) {
-        html += `
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="faq${i}" id="faq${i}-button">
-      <strong>${escapeHtml(q)}</strong>
-    </button>
-    <div id="faq${i}" class="faq-answer" hidden>
-      <p>${escapeHtml(a)}</p>
-    </div>
-  </div>`;
-      }
+  let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n  <div class="custom-faq">\n`;
+
+  pairs.forEach((pair, index) => {
+    const question = pair.querySelector(".question").value.trim();
+    const answer = pair.querySelector(".answer").value.trim();
+
+    if (question && answer) {
+      const escapedQuestion = escapeHtml(question);
+      const escapedAnswer = escapeHtml(answer);
+
+      html += `    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
+      html += `      <button class="faq-question" aria-expanded="false" aria-controls="faq${index}" id="faq${index}-button">\n`;
+      html += `        <strong itemprop="name">${escapedQuestion}</strong>\n`;
+      html += `      </button>\n`;
+      html += `      <div id="faq${index}" class="faq-answer" hidden itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">\n`;
+      html += `        <p itemprop="text">${escapedAnswer}</p>\n`;
+      html += `      </div>\n`;
+      html += `    </div>\n`;
     }
-    html += `\n</div>`;
-    return html;
-  }
+  });
+
+  html += `  </div>\n</div>`;
+  return html;
+}
 
   // Экранируем спецсимволы для HTML
   function escapeHtml(text) {

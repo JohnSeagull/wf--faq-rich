@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FAQ Generator — Enter Questions & Answers</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Prism CSS (тёмная тема) -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
   <link rel="stylesheet" href="main.css" />
+
+  <!-- Prism JS -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+
   <script defer src="main.js"></script>
 </head>
 <body>
@@ -15,8 +25,7 @@
     <div class="split-container">
       <div class="left-panel">
         <h2 class="section-heading">Enter Questions & Answers</h2>
-        <section id="faqContainer" class="section-box" aria-label="FAQ editor" role="list">
-        </section>
+        <section id="faqContainer" class="section-box" aria-label="FAQ editor" role="list"></section>
         <div class="controls">
           <button id="addBtn" class="btn" aria-label="Add new Q&A">Add Q&A pair</button>
         </div>
@@ -24,8 +33,8 @@
 
       <div class="right-panel">
         <h2 class="section-heading">HTML Preview</h2>
-        <section class="section-box" aria-label="HTML Preview">
-          <textarea id="htmlPreview" readonly aria-live="polite" aria-atomic="true"></textarea>
+        <section class="section-box code-preview" aria-label="HTML Preview">
+          <pre><code id="htmlPreview" class="language-html" aria-live="polite" aria-atomic="true"></code></pre>
         </section>
         <div class="controls">
           <div class="tooltip-wrapper">

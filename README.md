@@ -1,6 +1,7 @@
 # FAQ Generator for Webflow Rich Text
 
 > [🇬🇧 **English version below**](#-en)
+
 > [🇷🇺 **Русская версия ниже**](#-ru)
 
 ---

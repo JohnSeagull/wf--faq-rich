@@ -1,6 +1,10 @@
 # FAQ Generator for Webflow Rich Text
 
-## [Live Demo](https://ivnmchn.webflow.io/post/understanding-api-architecture)
+---
+
+# [🚀 Live Demo — Try it now!](https://ivnmchn.webflow.io/post/understanding-api-architecture)
+
+---
 
 > [🇬🇧 **English version below**](#-en)  
 > [🇷🇺 **Русская версия ниже**](#-ru)

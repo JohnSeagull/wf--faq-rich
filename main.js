@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateUI() {
     const html = generateHtml();
     htmlPreview.textContent = html;
-    if(window.Prism) Prism.highlightElement(htmlPreview);
 
     const questions = faqContainer.querySelectorAll(".faq-question");
     const answers = faqContainer.querySelectorAll(".faq-answer");

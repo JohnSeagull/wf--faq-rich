@@ -22,11 +22,11 @@ This tool helps you easily **generate FAQ sections** that are **optimized for We
 1. Go to the [FAQ Generator interface](https://johnseagull.github.io/wf--faq-rich/)  
 2. Create your FAQ question-answer pairs on the left panel
 
-<img width="1405" height="1511" alt="image" src="https://github.com/user-attachments/assets/85fc5300-cd5f-4cff-baf8-530338bd546b" />
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/85fc5300-cd5f-4cff-baf8-530338bd546b" />
 
 3. Copy the generated HTML from the right panel and paste it inside a **Rich Text** element in Webflow (using Embed or Custom Code block if needed)
 
-<img width="1230" height="1293" alt="image" src="https://github.com/user-attachments/assets/e1263535-2d25-499d-bb20-0a4d1a9f0c80" />
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/e1263535-2d25-499d-bb20-0a4d1a9f0c80" />
 
 4. Copy the contents or link of [`webflow-rich-faq.css`](https://github.com/JohnSeagull/wf--faq-rich/blob/main/webflow-rich-faq.css) and add it to the **head** of your Webflow page  
 5. Copy the contents or link of [`webflow-rich-faq.js`](https://github.com/JohnSeagull/wf--faq-rich/blob/main/webflow-rich-faq.js) and add it to the **footer** (before `</body>`) of your Webflow page

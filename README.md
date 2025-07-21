@@ -1,11 +1,11 @@
 # FAQ Generator for Webflow Rich Text
 
-> 🇬🇧 **English version below**  
-> 🇷🇺 **Русская версия ниже**
+> [🇬🇧 **English version below**](#-en)
+> [🇷🇺 **Русская версия ниже**](#-ru)
 
 ---
 
-## 📘 English
+## 🇬🇧 EN
 
 This tool helps you easily **generate FAQ sections** that are **optimized for Webflow Rich Text blocks** and **structured with Schema.org markup** for better SEO.
 
@@ -30,9 +30,9 @@ This tool helps you easily **generate FAQ sections** that are **optimized for We
 
 | File                   | Purpose                                                           |
 |------------------------|-------------------------------------------------------------------|
-| `faq-generator.html`   | Standalone interface (can be used locally or on GitHub Pages)     |
-| `webflow-rich-faq.css` | Optional CSS for styling the FAQ section in Webflow               |
-| `webflow-rich-faq.js`  | Optional JS for copy button, tooltips, and interactive behavior   |
+| [`faq-generator.html`](https://john-the-machine.github.io/faq-generator/faq-generator.html)   | Standalone interface (can be used locally or on GitHub Pages)     |
+| [`webflow-rich-faq.css`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.css) | Optional CSS for styling the FAQ section in Webflow               |
+| [`webflow-rich-faq.js`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.js)  | Optional JS for copy button, tooltips, and interactive behavior   |
 
 ### 🛠 Integration with Webflow
 
@@ -47,7 +47,7 @@ This project is licensed under the MIT License.
 
 ---
 
-## 📗 Русский
+## 🇷🇺 RU
 
 Этот инструмент помогает легко **создавать разделы FAQ**, которые **оптимизированы для Rich Text-блоков Webflow** и **структурированы по стандарту Schema.org** для улучшенного SEO.
 
@@ -72,9 +72,9 @@ This project is licensed under the MIT License.
 
 | Файл                   | Назначение                                                        |
 |------------------------|-------------------------------------------------------------------|
-| `faq-generator.html`   | Самостоятельный интерфейс (можно использовать локально или на GitHub Pages) |
-| `webflow-rich-faq.css` | CSS для оформления FAQ внутри Webflow                            |
-| `webflow-rich-faq.js`  | JS для кнопки копирования, тултипов и взаимодействия             |
+| [`faq-generator.html`](https://john-the-machine.github.io/faq-generator/faq-generator.html)   | Самостоятельный интерфейс (можно использовать локально или на GitHub Pages) |
+| [`webflow-rich-faq.css`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.css) | CSS для оформления FAQ внутри Webflow                            |
+| [`webflow-rich-faq.js`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.js)  | JS для кнопки копирования, тултипов и взаимодействия             |
 
 ### 🛠 Интеграция в Webflow
 

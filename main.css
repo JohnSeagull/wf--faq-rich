@@ -68,59 +68,37 @@ body, html {
 }
 
 .split-container > div > .section-heading {
-    margin-bottom: 0.75rem;
-    user-select: none;
-    font-size: 1.25rem;
-    font-weight: 600;
-    align-self: center;
+  margin-bottom: 0.75rem;
+  user-select: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  align-self: center;
 }
 
-.faq-list {
+.section-box {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   padding: 1rem;
   background: var(--container-bg);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) * 2);
-  display: flex;
-  flex-direction: column;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-.faq-list::-webkit-scrollbar {
+.section-box::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-.faq-list::-webkit-scrollbar-thumb {
+.section-box::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb);
   border-radius: 0.625rem;
 }
 
-.faq-list::-webkit-scrollbar-track {
+.section-box::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
-}
-
-.preview-section {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-#htmlPreview {
-  flex: 1 1 auto;
-  width: 100%;
-  resize: none;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: #010409;
-  padding: 1rem;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 0.9rem;
-  color: var(--text);
-  line-height: 1.4;
-  overflow-y: auto;
-  margin-top: auto;
 }
 
 .faq-pair {
@@ -135,21 +113,19 @@ body, html {
   width: 100%;
   display: block;
   overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--border);
 }
 
 .faq-question-wrapper {
-  border: 1px solid var(--border);
   border-bottom: none;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
-  background: var(--bg);
 }
 
 .faq-answer-wrapper {
-  border: 1px solid var(--border);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
-  background: var(--bg);
   margin-bottom: -0.25rem;
 }
 
@@ -307,6 +283,7 @@ textarea.faq-answer:focus {
   opacity: 1;
   visibility: visible;
 }
+
 .faq-question-wrapper input:focus + label,
 .faq-question-wrapper input:not(:placeholder-shown) + label,
 .faq-answer-wrapper textarea:focus + label,

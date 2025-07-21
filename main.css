@@ -327,6 +327,11 @@ textarea.faq-answer:focus {
   user-select: text;
 }
 @media (max-width: 768px) {
+  body,
+  html {
+    height: auto;
+  }
+
   .container {
     padding: 0 0.75rem;
     margin-top: 1rem;

@@ -7,42 +7,33 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Prism CSS (тёмная тема) -->
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-
   <link rel="stylesheet" href="main.css" />
-
-  <!-- Prism JS -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
 
   <script defer src="main.js"></script>
 </head>
 <body>
   <main class="container" role="main">
-    <h1 class="title">FAQ Generator</h1>
+    <h1 class="title" tabindex="0">FAQ Generator</h1>
 
     <div class="split-container">
-      <div class="left-panel">
+      <section class="panel left-panel" aria-label="FAQ editor" role="list">
         <h2 class="section-heading">Enter Questions & Answers</h2>
-        <section id="faqContainer" class="section-box" aria-label="FAQ editor" role="list"></section>
+        <div id="faqContainer" class="faq-list" role="list"></div>
         <div class="controls">
-          <button id="addBtn" class="btn" aria-label="Add new Q&A">Add Q&A pair</button>
+          <button id="addBtn" class="btn" type="button" aria-label="Add new question and answer pair">Add Q&A pair</button>
         </div>
-      </div>
+      </section>
 
-      <div class="right-panel">
+      <section class="panel right-panel" aria-label="HTML Preview">
         <h2 class="section-heading">HTML Preview</h2>
-        <section class="section-box code-preview" aria-label="HTML Preview">
-          <pre><code id="htmlPreview" class="language-html" aria-live="polite" aria-atomic="true"></code></pre>
-        </section>
-        <div class="controls">
-          <div class="tooltip-wrapper">
-            <button id="copyBtn" class="btn secondary" disabled aria-label="Copy HTML to clipboard" aria-describedby="copyMessage">Copy HTML</button>
-            <div id="copyMessage" class="tooltip" role="status" aria-live="polite">Copied!</div>
-          </div>
+        <div class="section-box code-preview" tabindex="0" aria-live="polite" aria-atomic="true">
+          <pre><code id="htmlPreview" class="language-html"></code></pre>
         </div>
-      </div>
+        <div class="controls tooltip-wrapper">
+          <button id="copyBtn" class="btn secondary" type="button" disabled aria-label="Copy generated HTML to clipboard" aria-describedby="copyMessage">Copy HTML</button>
+          <div id="copyMessage" class="tooltip" role="status" aria-live="polite" aria-atomic="true">Copied!</div>
+        </div>
+      </section>
     </div>
   </main>
 </body>

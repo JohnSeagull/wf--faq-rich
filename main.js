@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <textarea class="faq-answer" placeholder=" " autocomplete="off"></textarea>
         <label>Answer</label>
       </div>
-      <button class="delete-btn" type="button">−</button>
+      <button class="delete-btn" type="button" aria-label="Delete question">−</button>
     `;
 
     faqPair.querySelector(".delete-btn").addEventListener("click", () => {
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     faqContainer.appendChild(faqPair);
-    refreshLabels(); // Обновляем нумерацию сразу после вставки
+    refreshLabels();
   }
 
   function refreshLabels() {
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function generateHtml() {
     const pairs = faqContainer.querySelectorAll(".faq-pair");
     let html = `<div itemscope itemtype="https://schema.org/FAQPage">\n`;
+    html += `  <ul class="accordion__list">\n`;
 
     pairs.forEach(pair => {
       const qInput = pair.querySelector(".faq-question");
@@ -70,16 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const answer = aInput.value.trim();
 
       if (question && answer) {
-        html += `  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
-        html += `    <h2 itemprop="name">${escapeHtml(question)}</h2>\n`;
-        html += `    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">\n`;
-        html += `      <p itemprop="text">${escapeHtml(answer)}</p>\n`;
-        html += `    </div>\n`;
-        html += `  </div>\n`;
+        html += `    <li class="accordion" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">\n`;
+        html += `      <button class="accordion__control" aria-expanded="false">\n`;
+        html += `        <h2 itemprop="name">${escapeHtml(question)}</h2>\n`;
+        html += `        <span class="accordion__icon" aria-hidden="true">\n`;
+        html += `          <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n`;
+        html += `            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n`;
+        html += `          </svg>\n`;
+        html += `        </span>\n`;
+        html += `      </button>\n`;
+        html += `      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" aria-hidden="true">\n`;
+        html += `        <p itemprop="text">${escapeHtml(answer)}</p>\n`;
+        html += `      </div>\n`;
+        html += `    </li>\n`;
       }
     });
 
-    html += `</div>`;
+    html += `  </ul>\n`;
+    html += `</div>\n`;
+
     return html;
   }
 
@@ -119,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   faqContainer.addEventListener("input", updateUI);
 
-  // Инициализация
   addPair();
   updateUI();
 });

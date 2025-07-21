@@ -6,9 +6,6 @@
 
 ---
 
-
-
-
 ## 🇬🇧 EN
 
 This tool helps you easily **generate FAQ sections** that are **optimized for Webflow Rich Text blocks** and **structured with Schema.org markup** for better SEO.
@@ -50,6 +47,9 @@ This project is licensed under the MIT License.
 © John The Machine
 
 ---
+
+
+
 
 ## 🇷🇺 RU
 

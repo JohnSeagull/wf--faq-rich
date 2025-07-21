@@ -95,7 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateUI() {
     const html = generateHtml();
-    htmlPreview.value = html;
+    htmlPreview.textContent = html;
+    if(window.Prism) Prism.highlightElement(htmlPreview);
 
     const questions = faqContainer.querySelectorAll(".faq-question");
     const answers = faqContainer.querySelectorAll(".faq-answer");
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   copyBtn.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(htmlPreview.value);
+      await navigator.clipboard.writeText(htmlPreview.textContent);
       copyTooltip.classList.add("show");
       setTimeout(() => copyTooltip.classList.remove("show"), 1500);
     } catch (err) {

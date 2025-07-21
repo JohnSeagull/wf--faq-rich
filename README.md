@@ -30,7 +30,7 @@ This tool helps you easily **generate FAQ sections** that are **optimized for We
 
 | File                   | Purpose                                                           |
 |------------------------|-------------------------------------------------------------------|
-| [`faq-generator.html`](https://john-the-machine.github.io/faq-generator/faq-generator.html)   | Standalone interface (can be used locally or on GitHub Pages)     |
+| [`faq-generator.html`](https://johnseagull.github.io/wf--faq-rich/)   | Standalone interface (can be used locally or on GitHub Pages)     | 
 | [`webflow-rich-faq.css`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.css) | Optional CSS for styling the FAQ section in Webflow               |
 | [`webflow-rich-faq.js`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.js)  | Optional JS for copy button, tooltips, and interactive behavior   |
 
@@ -72,7 +72,7 @@ This project is licensed under the MIT License.
 
 | Файл                   | Назначение                                                        |
 |------------------------|-------------------------------------------------------------------|
-| [`faq-generator.html`](https://john-the-machine.github.io/faq-generator/faq-generator.html)   | Самостоятельный интерфейс (можно использовать локально или на GitHub Pages) |
+| [`faq-generator.html`](https://johnseagull.github.io/wf--faq-rich/)   | Самостоятельный интерфейс (можно использовать локально или на GitHub Pages) |
 | [`webflow-rich-faq.css`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.css) | CSS для оформления FAQ внутри Webflow                            |
 | [`webflow-rich-faq.js`](https://john-the-machine.github.io/faq-generator/webflow-rich-faq.js)  | JS для кнопки копирования, тултипов и взаимодействия             |
 
